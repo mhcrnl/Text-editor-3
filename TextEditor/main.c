@@ -1,6 +1,6 @@
 #include "textViewCmds.h"
 #include "techCmds.h"
-//#include "stringEditCmds.h"
+#include "stringEditCmds.h"
 #include "stringInsertCmds.h"
 #include "assistFunctions.h"
 #include "struct.h"
