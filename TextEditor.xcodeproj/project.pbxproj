@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		84522E571BF7AFC2006F9CD8 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = 84522E561BF7AFC2006F9CD8 /* main.c */; };
-		84522E5F1BF7B201006F9CD8 /* prog_brain.c in Sources */ = {isa = PBXBuildFile; fileRef = 84522E5D1BF7B201006F9CD8 /* prog_brain.c */; };
 		84522E621BF7F1FA006F9CD8 /* textViewCmds.c in Sources */ = {isa = PBXBuildFile; fileRef = 84522E601BF7F1FA006F9CD8 /* textViewCmds.c */; };
 		84522E651BF7F474006F9CD8 /* stringInsertCmds.c in Sources */ = {isa = PBXBuildFile; fileRef = 84522E631BF7F474006F9CD8 /* stringInsertCmds.c */; };
 		84522E681BF7F49E006F9CD8 /* stringEditCmds.c in Sources */ = {isa = PBXBuildFile; fileRef = 84522E661BF7F49E006F9CD8 /* stringEditCmds.c */; };
@@ -31,8 +30,6 @@
 /* Begin PBXFileReference section */
 		84522E531BF7AFC2006F9CD8 /* TextEditor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TextEditor; sourceTree = BUILT_PRODUCTS_DIR; };
 		84522E561BF7AFC2006F9CD8 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		84522E5D1BF7B201006F9CD8 /* prog_brain.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = prog_brain.c; sourceTree = "<group>"; };
-		84522E5E1BF7B201006F9CD8 /* prog_brain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = prog_brain.h; sourceTree = "<group>"; };
 		84522E601BF7F1FA006F9CD8 /* textViewCmds.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = textViewCmds.c; sourceTree = "<group>"; };
 		84522E611BF7F1FA006F9CD8 /* textViewCmds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = textViewCmds.h; sourceTree = "<group>"; };
 		84522E631BF7F474006F9CD8 /* stringInsertCmds.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = stringInsertCmds.c; sourceTree = "<group>"; };
@@ -77,8 +74,6 @@
 			isa = PBXGroup;
 			children = (
 				84522E561BF7AFC2006F9CD8 /* main.c */,
-				84522E5D1BF7B201006F9CD8 /* prog_brain.c */,
-				84522E5E1BF7B201006F9CD8 /* prog_brain.h */,
 				84522E601BF7F1FA006F9CD8 /* textViewCmds.c */,
 				84522E611BF7F1FA006F9CD8 /* textViewCmds.h */,
 				84522E661BF7F49E006F9CD8 /* stringEditCmds.c */,
@@ -152,7 +147,6 @@
 			files = (
 				84522E6B1BF7F4C1006F9CD8 /* techCmds.c in Sources */,
 				84522E621BF7F1FA006F9CD8 /* textViewCmds.c in Sources */,
-				84522E5F1BF7B201006F9CD8 /* prog_brain.c in Sources */,
 				84522E681BF7F49E006F9CD8 /* stringEditCmds.c in Sources */,
 				84522E6E1BF7F500006F9CD8 /* assistFunctions.c in Sources */,
 				84522E651BF7F474006F9CD8 /* stringInsertCmds.c in Sources */,

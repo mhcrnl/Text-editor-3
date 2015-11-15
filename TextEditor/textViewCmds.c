@@ -1,6 +1,5 @@
 #include "textViewCmds.h"
 #include "assistFunctions.h"
-#include "prog_brain.h"
 #include <termios.h>
 #include <unistd.h>
 #include <string.h>
@@ -256,13 +255,14 @@ void printRange(void){
     tmpCharPointer = pointerForStrings -> curString;
 }
 
-int setWrap(void){
+void setWrap(void){
     int i = 0;
     char yesM[3] = "yes";
     char noM[2] = "no";
     
     if (pararmetrs == NULL) {
-        return 1;
+        fprintf(stderr, "Некорректный параметр!\n");
+        return;
     }
     
     while (pararmetrs[i] != '\0') {
@@ -270,7 +270,7 @@ int setWrap(void){
             i++;
             if (i == 3){
                 wrapMod = 1;
-                return 0;
+                return;
             }
         }
         else break;
@@ -281,16 +281,14 @@ int setWrap(void){
             i++;
             if (i == 2){
                 wrapMod = 0;
-                return 0;
+                return;
             }
         }
         else break;
     }
-    return 1;
+    fprintf(stderr, "Некорректный параметр!\n");;
 }
 
 void setTabWidth(void){
-    int newWidth;
-    newWidth = atoi(pararmetrs);
-    tabWidth = newWidth;
+    tabWidth = atoi(pararmetrs);
 }

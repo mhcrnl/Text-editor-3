@@ -14,7 +14,7 @@ extern char fileName[];
 extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
-struct listOfStrings *pointerForStrings;
+extern struct listOfStrings *pointerForStrings;
 
 void exitF(void){
     int i = 0, isForceExit = 0;

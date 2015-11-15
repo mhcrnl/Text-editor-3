@@ -1,8 +1,8 @@
-#include <stdio.h>
-#include <fcntl.h>
-#include <stdlib.h>
-#include <termios.h>
-#include "prog_brain.h"
+#include "textViewCmds.h"
+#include "techCmds.h"
+#include "stringEditCmds.h"
+#include "stringInsertCmds.h"
+#include "assistFunctions.h"
 
 #define NUMOFCMD 16
 
@@ -17,7 +17,6 @@ int screenCol = 80, screenRow = 25;
 
 int main(int argc, char *argv[]){
     int exit = 0, returningInt, i = 0;
-    char temp;
     
     if (argc == 2){
         while (argv[1][i] != '\0') {
@@ -30,10 +29,10 @@ int main(int argc, char *argv[]){
     initCmd();
     
     while (!exit) {
-        fprintf(stderr, "editor: ");
+        fprintf(stderr, "Editor: ");
         returningInt = readCmd();
         switch (returningInt) {
-            case 1: break;
+            case -1: break;
                 
             case 2:{
                 fprintf(stderr, "Нарушено сочетание кавычек!\n");
@@ -41,14 +40,14 @@ int main(int argc, char *argv[]){
             }
                 
             case 3:{
+                fprintf(stderr, "Переполнение памяти!\n");
                 return 0;
-                break;
             }
                 
             default:
                 break;
         }
-        if ((returningInt == 1) || (returningInt == 2)) {
+        if ((returningInt == -1) || (returningInt == 2)) {
             continue;
         }
         
@@ -76,46 +75,68 @@ int main(int argc, char *argv[]){
                 setWrap();
                 break;
             }
-                /*case 4:{
-                 
-                 break;
-                 }
-                 case 5:{
-                 
-                 break;
-                 }
-                 case 6:
-                 
-                 break;
-                 case 7:
-                 
-                 break;
-                 case 8:
-                 <#statements#>
-                 break;
-                 case 9:
-                 <#statements#>
-                 break;
-                 case 10:
-                 <#statements#>
-                 break;
-                 case 11:
-                 <#statements#>
-                 break;
-                 case 12:
-                 <#statements#>
-                 break;
-                 case 13:
-                 <#statements#>
-                 break;
-                 case 14:
-                 <#statements#>
-                 break;
-                 case 15:
-                 <#statements#>
-                 break;*/
-            default:
+                
+            case 4:{
+                insertAfter();
                 break;
+            }
+            
+            case 5:{
+                editString();
+                break;
+             }
+                
+            case 6:{
+                insertSymbol();
+                break;
+            }
+            
+            case 7:{
+                replaceSubstring();
+                break;
+            }
+            
+            case 8:{
+                deleteRange();
+                break;
+            }
+                
+            case 9:{
+                deleteBraces();
+                break;
+            }
+             
+            case 10:{
+                exitF();
+                break;
+            }
+             
+            case 11:{
+                readF();
+                break;
+            }
+             
+            case 12:{
+                openF();
+                break;
+            }
+             
+            case 13:{
+                writeF();
+                break;
+            }
+             
+            case 14:{
+                setName();
+                break;
+            }
+             
+            case 15:{
+                helpF();
+                break;
+            }
+                
+            default: break;
         }
     }
     return 0;
