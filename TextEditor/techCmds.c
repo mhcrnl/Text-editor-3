@@ -11,7 +11,7 @@
 
 extern char *comands[], *pararmetrs, *userString;
 extern char fileName[];
-extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
+extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod, isSaved;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
@@ -31,9 +31,12 @@ int exitF(void){
     if (isForceExit) {
         return 1;
     }
+    if (!isSaved) {
+        fprintf(stderr, "Файл не сохранен!\n");
+        return 0;
+    }
     
-    fprintf(stderr, "Файл не сохранен!\n");
-    return 0;
+    return 1;
 }
 
 void readF(void){
@@ -98,6 +101,8 @@ void writeF(void){
         return;
     }
     
+    tmpStrPointer = pointerForStrings;
+    
     while (tmpStrPointer != NULL) {
         tmpCharPointer = tmpStrPointer -> curString;
         while (tmpCharPointer != NULL) {
@@ -106,4 +111,5 @@ void writeF(void){
         }
         tmpStrPointer = tmpStrPointer -> next;
     }
+    isSaved = 1;
 }

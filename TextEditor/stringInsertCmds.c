@@ -59,12 +59,14 @@ int insertAfter(void){
                 tempNextChar->curChar = pararmetrs[i];
                 tempPrevChar = tempNextChar;
                 firstIteration = 0;
+                i++;
                 continue;
             }
             tempNextChar->curChar = pararmetrs[i];
             tempNextChar->prev = tempPrevChar;
             tempPrevChar->next = tempNextChar;
             tempPrevChar = tempNextChar;
+            i++;
         }
         if (pararmetrs[i] == '\0') {
             tempNextStr -> next = NULL;
@@ -80,6 +82,7 @@ int insertAfter(void){
         }
         tempNextStr->prev = tempPrevStr;
         tempPrevStr->next = tempNextStr;
+        i++;
     }while (1);
     
     tempNextStr -> next = NULL;

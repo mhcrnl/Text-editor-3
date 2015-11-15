@@ -17,7 +17,7 @@
 
 char *comands[NUMOFCMD], *pararmetrs = NULL, *userString = NULL;
 char fileName[127] = "!";
-int tabWidth = 8, wrapMod = 1, screenNumY = 0, isFileSaved = 0;
+int tabWidth = 8, wrapMod = 1, screenNumY = 0, isFileSaved = 0, isSaved = 0;
 struct listOfStrings *pointerForStrings;
 struct listOfStrings *tmpStrPointer;
 struct listOfChars *tmpCharPointer;
@@ -76,12 +76,10 @@ int main(int argc, char *argv[]){
             }
             case 1:{
                 printPages();
-                clearOutBuffer();
                 break;
             }
             case 2:{
                 printRange();
-                clearOutBuffer();
                 break;
             }
             case 3:{
@@ -134,11 +132,13 @@ int main(int argc, char *argv[]){
              
             case 12:{
                 openF();
+                clearOutBuffer();
                 break;
             }
              
             case 13:{
                 writeF();
+                //clearOutBuffer();
                 break;
             }
              
