@@ -4,20 +4,28 @@
 #include <termios.h>
 #include "prog_brain.h"
 
+#define NUMOFCMD 16
+
+char *comands[NUMOFCMD], *pararmetrs = NULL, *userString = NULL;
+char fileName[127];
+int tabWidth = 8, wrapMod = 1, screenNumY = 0, isFileSaved = 0;
+struct listOfStrings *pointerForStrings;
+struct listOfStrings *tmpStrPointer;
+struct listOfChars *tmpCharPointer;
+
+int screenCol = 80, screenRow = 25;
+
 int main(int argc, char *argv[]){
-    int exit = 0; //i = 0;
-    int returningInt;
-    char fileName[20], temp;
-    //char temp = '!';
+    int exit = 0, returningInt, i = 0;
+    char temp;
     
     if (argc == 2){
-        initFile(argv[1]);
-    }
-    else{
-        scanf("%s", fileName);
+        while (argv[1][i] != '\0') {
+            fileName[i] = argv[1][i];
+            i++;
+        }
         initFile(fileName);
     }
-    temp = getchar();
     
     initCmd();
     
