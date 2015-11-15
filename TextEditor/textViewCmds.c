@@ -23,6 +23,10 @@ void printPages(void){
     struct winsize screenSize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &screenSize);
     
+    if (pointerForStrings == NULL) {
+        return;
+    }
+    
     changeTtyMod(1);
     
     if (!isatty(1)) {

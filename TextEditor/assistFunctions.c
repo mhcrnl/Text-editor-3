@@ -285,6 +285,8 @@ int initFile(char *fileName){
             tempPrevChar = tempNextChar;
         }
         if (feof(inputFile)){
+            tmpStrPointer = pointerForStrings;
+            tmpCharPointer = pointerForStrings -> curString;
             tempNextStr -> next = NULL;
             return 1;
         }
@@ -300,12 +302,6 @@ int initFile(char *fileName){
         tempNextStr->prev = tempPrevStr;
         tempPrevStr->next = tempNextStr;
     }while (1);
-    
-    tempNextStr->next = NULL;
-    
-    tmpStrPointer = pointerForStrings;
-    tmpCharPointer = pointerForStrings -> curString;
-    return 1;
 }
 
 int readCmd(void){ // -1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти

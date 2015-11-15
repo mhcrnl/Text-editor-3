@@ -76,19 +76,23 @@ int main(int argc, char *argv[]){
             }
             case 1:{
                 printPages();
+                clearOutBuffer();
                 break;
             }
             case 2:{
                 printRange();
+                clearOutBuffer();
                 break;
             }
             case 3:{
                 setWrap();
+                clearOutBuffer();
                 break;
             }
                 
             case 4:{
                 insertAfter();
+                clearOutBuffer();
                 break;
             }
             
