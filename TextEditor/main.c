@@ -1,13 +1,22 @@
 #include "textViewCmds.h"
 #include "techCmds.h"
-#include "stringEditCmds.h"
+//#include "stringEditCmds.h"
 #include "stringInsertCmds.h"
 #include "assistFunctions.h"
+#include "struct.h"
+#include <termios.h>
+#include <unistd.h>
+#include <string.h>
+#include <stdio.h>
+#include <ctype.h>
+#include <stdlib.h>
+#include <sys/ioctl.h>
+
 
 #define NUMOFCMD 16
 
 char *comands[NUMOFCMD], *pararmetrs = NULL, *userString = NULL;
-char fileName[127];
+char fileName[127] = "!";
 int tabWidth = 8, wrapMod = 1, screenNumY = 0, isFileSaved = 0;
 struct listOfStrings *pointerForStrings;
 struct listOfStrings *tmpStrPointer;
@@ -17,6 +26,7 @@ int screenCol = 80, screenRow = 25;
 
 int main(int argc, char *argv[]){
     int exit = 0, returningInt, i = 0;
+    //char temp;
     
     if (argc == 2){
         while (argv[1][i] != '\0') {
@@ -36,6 +46,7 @@ int main(int argc, char *argv[]){
                 
             case 2:{
                 fprintf(stderr, "Нарушено сочетание кавычек!\n");
+                clearOutBuffer();
                 break;
             }
                 
@@ -81,7 +92,7 @@ int main(int argc, char *argv[]){
                 break;
             }
             
-            case 5:{
+            /*case 5:{
                 editString();
                 break;
              }
@@ -104,15 +115,16 @@ int main(int argc, char *argv[]){
             case 9:{
                 deleteBraces();
                 break;
-            }
+            }*/
              
             case 10:{
-                exitF();
+                exit = exitF();
                 break;
             }
              
             case 11:{
                 readF();
+                clearOutBuffer();
                 break;
             }
              
@@ -131,10 +143,10 @@ int main(int argc, char *argv[]){
                 break;
             }
              
-            case 15:{
+            /*case 15:{
                 helpF();
                 break;
-            }
+            }*/
                 
             default: break;
         }

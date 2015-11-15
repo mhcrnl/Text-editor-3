@@ -10,5 +10,6 @@ int initFile(char*);
 int readCmd(void);
 int changeTtyMod(int);
 int recognizeCmd(void);
+void clearOutBuffer(void);
 
 #endif

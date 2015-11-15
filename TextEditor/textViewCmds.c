@@ -1,5 +1,6 @@
 #include "textViewCmds.h"
 #include "assistFunctions.h"
+#include "struct.h"
 #include <termios.h>
 #include <unistd.h>
 #include <string.h>
@@ -8,26 +9,13 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 
-struct listOfChars{
-    char curChar;
-    struct listOfChars *next;
-    struct listOfChars *prev;
-};
-
-struct listOfStrings{
-    struct listOfChars *curString;
-    struct listOfStrings *next;
-    struct listOfStrings *prev;
-};
-
+extern char *comands[], *pararmetrs, *userString;
+extern char fileName[];
+extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
-extern int wrapMod;
-extern char *pararmetrs;
-extern char *userString;
-extern int tabWidth;
-struct listOfStrings *pointerForStrings;
-extern int screenCol, screenRow;
+extern struct listOfStrings *pointerForStrings;
+
 
 void printPages(void){
     char temp = '!';

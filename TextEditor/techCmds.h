@@ -1,7 +1,7 @@
 #ifndef techCmds_h
 #define techCmds_h
 
-void exitF(void);
+int exitF(void);
 void readF(void);
 void openF(void);
 void setName(void);

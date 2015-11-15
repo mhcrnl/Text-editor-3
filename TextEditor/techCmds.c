@@ -16,7 +16,7 @@ extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
 
-void exitF(void){
+int exitF(void){
     int i = 0, isForceExit = 0;
     char *force = "force";
     while (pararmetrs[i] != '\0'){
@@ -29,42 +29,47 @@ void exitF(void){
     }
     
     if (isForceExit) {
-        return;
+        return 1;
     }
     
-    fprintf(stderr, "The file is not saved!\n");
-    return;
+    fprintf(stderr, "Файл не сохранен!\n");
+    return 0;
 }
 
 void readF(void){
-    int i = 0;
-    char tempFileName[127];
+    int i = 0, j = 0;
+    char tempFileName[127] = "!";
     
     if (pararmetrs[i] == '"') {
         i++;
     }
     
     while (pararmetrs[i] != '\0') {
-        tempFileName[i] = pararmetrs[i];
+        tempFileName[j] = pararmetrs[i];
+        i++;
+        j++;
     }
+    
     if(!initFile(tempFileName)){
-        fprintf(stderr, "No such file!\n");
+        fprintf(stderr, "Нет такого файла!\n");
         return;
     }
 }
 
 void openF(void){
-    int i = 0;
+    int i = 0, j = 0;
     
     if (pararmetrs[i] == '"') {
         i++;
     }
     
     while (pararmetrs[i] != '\0') {
-        fileName[i] = pararmetrs[i];
+        fileName[j] = pararmetrs[i];
+        i++;
+        j++;
     }
     if(!initFile(fileName)){
-        fprintf(stderr, "No such file!\n");
+        fprintf(stderr, "Нет такого файла!\n");
         return;
     }
 }
@@ -83,13 +88,13 @@ void setName(void){
 
 void writeF(void){
     if (fileName[0] == '\0') {
-        fprintf(stderr, "There is an associated file!\n");
+        fprintf(stderr, "Нет ассоциированного файла!\n");
         return;
     }
     
     FILE *outputFile = fopen(fileName, "wb");
     if (outputFile == NULL) {
-        fprintf(stderr, "No such file!\n");
+        fprintf(stderr, "Нет такого файла!\n");
         return;
     }
     

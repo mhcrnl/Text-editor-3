@@ -1,6 +1,5 @@
 #include "assistFunctions.h"
 #include "struct.h"
-#include "prog_brain.h"
 #include <termios.h>
 #include <unistd.h>
 #include <string.h>
@@ -13,7 +12,7 @@ extern char *comands[], *pararmetrs, *userString;
 extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
-struct listOfStrings *pointerForStrings;
+extern struct listOfStrings *pointerForStrings;
 
 int degree(int num, int deg){
     int temp = num;
@@ -269,7 +268,7 @@ int initFile(char *fileName){
             }
             tempNextChar = (struct listOfChars*)malloc(sizeof(struct listOfChars));
             if (tempNextChar == NULL) {
-                fprintf(stderr, "Not enough memory\n");
+                fprintf(stderr, "Недостаточно памяти!\n");
                 exit (1);
             }
             if (firstIteration == 1){
@@ -287,7 +286,7 @@ int initFile(char *fileName){
         }
         if (feof(inputFile)){
             tempNextStr -> next = NULL;
-            return 0;
+            return 1;
         }
         temp = '!';
         firstIteration = 1;
@@ -295,7 +294,7 @@ int initFile(char *fileName){
         tempPrevStr = tempNextStr;
         tempNextStr = (struct listOfStrings*)malloc(sizeof(struct listOfStrings));
         if (tempNextStr == NULL) {
-            fprintf(stderr, "Not enough memory\n");
+            fprintf(stderr, "Недостаточно памяти!\n");
             exit (1);
         }
         tempNextStr->prev = tempPrevStr;
@@ -306,7 +305,7 @@ int initFile(char *fileName){
     
     tmpStrPointer = pointerForStrings;
     tmpCharPointer = pointerForStrings -> curString;
-    return 0;
+    return 1;
 }
 
 int readCmd(void){ // -1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти
@@ -558,4 +557,8 @@ int recognizeCmd(void){ // -1 - неккоректная команда
         }
     }
     return -1;
+}
+
+void clearOutBuffer(void){
+    while(getchar() != '\n'){};
 }
