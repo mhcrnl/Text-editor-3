@@ -66,7 +66,7 @@ int main(int argc, char *argv[]){
         
         if (returningInt == -1) {
             fprintf(stderr, "Некорректная команда!\n");
-            break;
+            continue;
         }
         
         switch (returningInt) {
