@@ -40,7 +40,7 @@
 		84522E6A1BF7F4C1006F9CD8 /* techCmds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = techCmds.h; sourceTree = "<group>"; };
 		84522E6C1BF7F500006F9CD8 /* assistFunctions.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = assistFunctions.c; sourceTree = "<group>"; };
 		84522E6D1BF7F500006F9CD8 /* assistFunctions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assistFunctions.h; sourceTree = "<group>"; };
-		84522E701BF889A0006F9CD8 /* struct.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = struct.h; path = ../struct.h; sourceTree = "<group>"; };
+		84522E711BF9141A006F9CD8 /* struct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = struct.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,7 +84,7 @@
 				84522E6A1BF7F4C1006F9CD8 /* techCmds.h */,
 				84522E6C1BF7F500006F9CD8 /* assistFunctions.c */,
 				84522E6D1BF7F500006F9CD8 /* assistFunctions.h */,
-				84522E701BF889A0006F9CD8 /* struct.h */,
+				84522E711BF9141A006F9CD8 /* struct.h */,
 			);
 			path = TextEditor;
 			sourceTree = "<group>";
