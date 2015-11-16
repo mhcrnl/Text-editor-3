@@ -304,7 +304,7 @@ int initFile(char *fileName){
     }while (1);
 }
 
-int readCmd(void){ // -1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти
+int readCmd(void){ /*-1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти*/
     char tempCur = '!', tempPrev = '!';
     int firstSymbol = 0;
     int i = 0;
@@ -465,11 +465,12 @@ int readCmd(void){ // -1 - пустая строка, 2 - нарушение с�
                 }
             }
                 
-            case '#':{
-                return 0;
-            }
-                
-            case '\n': {
+            case '#': case '\n':{
+                userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                if (userString == NULL){
+                    return 3;
+                }
+                userString[i] = tempCur;
                 return 0;
             }
                 
