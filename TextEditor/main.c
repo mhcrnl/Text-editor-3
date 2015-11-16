@@ -46,7 +46,7 @@ int main(int argc, char *argv[]){
                 
             case 2:{
                 fprintf(stderr, "Нарушено сочетание кавычек!\n");
-                clearOutBuffer();
+                //clearOutBuffer();
                 break;
             }
                 

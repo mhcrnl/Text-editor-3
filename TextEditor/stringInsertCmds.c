@@ -69,7 +69,7 @@ int insertAfter(void){
             i++;
         }
         if (pararmetrs[i] == '\0') {
-            tempNextStr -> next = NULL;
+            //tempNextStr -> next = NULL;
             break;
         }
         firstIteration = 1;
@@ -88,33 +88,40 @@ int insertAfter(void){
     tempNextStr -> next = NULL;
     tempStr = pointerForStrings;
     
-    if (posIndicator) {
-        while (tempStr -> next != NULL) {
-            tempStr = tempStr -> next;
-        }
-        tempStr -> next = begPointer;
-        tempNextStr -> prev = tempStr;
-    }
-    else{
-        if (strNum != 0) {
-            for (i = 1; i < strNum; i++) {
-                if (tempStr -> next == NULL) {
-                    tempStr -> next = begPointer;
-                    tempNextStr -> prev = tempStr;
-                    break;
-                }
+    if ((tempStr -> next == NULL) && (tempStr -> curString == NULL)) {
+        tempStr = begPointer;
+    }else{
+    
+        if (posIndicator) {
+            while (tempStr -> next != NULL) {
                 tempStr = tempStr -> next;
             }
-            tempNext = tempStr -> next;
             tempStr -> next = begPointer;
-            tempNextStr -> next = tempNext;
-            tempNext -> prev = tempNextStr;
+            tempNextStr -> prev = tempStr;
         }
         else{
-            tempNextStr -> next = tempStr;
-            tempStr -> prev = tempNextStr;
+            if (strNum != 0) {
+                for (i = 1; i < strNum; i++) {
+                    if (tempStr -> next == NULL) {
+                        tempStr -> next = begPointer;
+                        tempNextStr -> prev = tempStr;
+                        break;
+                    }
+                    tempStr = tempStr -> next;
+                }
+                tempNext = tempStr -> next;
+                tempStr -> next = begPointer;
+                tempNextStr -> next = tempNext;
+                tempNext -> prev = tempNextStr;
+            }
+            else{
+                tempNextStr -> next = tempStr;
+                tempStr -> prev = tempNextStr;
+            }
         }
     }
     
+    tmpStrPointer = pointerForStrings;
+    tmpCharPointer = pointerForStrings -> curString;
     return 0;
 }

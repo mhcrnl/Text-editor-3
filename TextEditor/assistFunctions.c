@@ -305,7 +305,7 @@ int initFile(char *fileName){
 }
 
 int readCmd(void){ // -1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти
-    char tempCur, tempPrev;
+    char tempCur = '!', tempPrev = '!';
     int firstSymbol = 0;
     int i = 0;
     int tripleQuotes = 0;
