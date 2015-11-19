@@ -13,6 +13,7 @@ extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
+static struct termios oldAttributes;
 
 int degree(int num, int deg){
     int temp = num;
@@ -515,7 +516,6 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
 
 int changeTtyMod(int setMod){
     //на ввод: 1-в каноничный, 0-в неканоничный;  на выход -1 - перенаправлен вывод
-    static struct termios oldAttributes;
     struct termios newAttributes;
     
     if(!isatty(0))

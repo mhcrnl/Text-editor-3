@@ -21,10 +21,11 @@ int tabWidth = 8, wrapMod = 1, screenNumY = 0, isFileSaved = 0, isSaved = 0;
 struct listOfStrings *pointerForStrings;
 struct listOfStrings *tmpStrPointer;
 struct listOfChars *tmpCharPointer;
-
+extern struct termios oldAttributes;
 int screenCol = 80, screenRow = 25;
 
 int main(int argc, char *argv[]){
+    tcgetattr(0,&oldAttributes);
     int exit = 0, returningInt, i = 0;
     //char temp;
     
