@@ -42,7 +42,7 @@ int main(int argc, char *argv[]){
         fprintf(stderr, "Editor: ");
         returningInt = readCmd();
         switch (returningInt) {
-            case -1: break;
+            case 1: break;
                 
             case 2:{
                 fprintf(stderr, "Нарушено сочетание кавычек!\n");
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]){
             default:
                 break;
         }
-        if ((returningInt == -1) || (returningInt == 2)) {
+        if ((returningInt == 1) || (returningInt == 2)) {
             continue;
         }
         

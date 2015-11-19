@@ -51,7 +51,7 @@ int insertAfter(void){
             tempNextChar = (struct listOfChars*)malloc(sizeof(struct listOfChars));
             if (tempNextChar == NULL) {
                 fprintf(stderr, "Недостаточно памяти!\n");
-                return 1;
+                exit(1);
             }
             if (firstIteration == 1){
                 tempNextStr->curString = tempNextChar;

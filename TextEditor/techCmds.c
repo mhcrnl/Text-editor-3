@@ -90,7 +90,7 @@ void setName(void){
 }
 
 void writeF(void){
-    if (fileName[0] == '\0') {
+    if (fileName[0] == '!') {
         fprintf(stderr, "Нет ассоциированного файла!\n");
         return;
     }
@@ -112,4 +112,6 @@ void writeF(void){
         tmpStrPointer = tmpStrPointer -> next;
     }
     isSaved = 1;
+    
+    fclose(outputFile);
 }

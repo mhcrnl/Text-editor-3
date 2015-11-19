@@ -288,6 +288,7 @@ int initFile(char *fileName){
             tmpStrPointer = pointerForStrings;
             tmpCharPointer = pointerForStrings -> curString;
             tempNextStr -> next = NULL;
+            fclose(inputFile);
             return 1;
         }
         temp = '!';
@@ -297,6 +298,7 @@ int initFile(char *fileName){
         tempNextStr = (struct listOfStrings*)malloc(sizeof(struct listOfStrings));
         if (tempNextStr == NULL) {
             fprintf(stderr, "Недостаточно памяти!\n");
+            
             exit (1);
         }
         tempNextStr->prev = tempPrevStr;
@@ -304,7 +306,7 @@ int initFile(char *fileName){
     }while (1);
 }
 
-int readCmd(void){ /*-1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти*/
+int readCmd(void){ /* 1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти*/
     char tempCur = '!', tempPrev = '!';
     int firstSymbol = 0;
     int i = 0;
@@ -315,13 +317,14 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
     tempPrev = tempCur;
     
     if (tempCur == '\n'){
-        return - 1;
+        return 1;
     }
     
     if (tempCur != ' '){
         firstSymbol = 1;
         userString = (char*)realloc(userString, (i + 1) * sizeof(char));
         if (userString == NULL){
+            free(userString);
             return 3;
         }
         userString[i] = tempCur;
@@ -344,6 +347,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                         tempPrev = tempCur;
                         userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                         if (userString == NULL){
+                            free(userString);
                             return 3;
                         }
                         userString[i] = tempCur;
@@ -368,6 +372,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                         tripleQuotes++;
                         userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                         if (userString == NULL){
+                            free(userString);
                             return 3;
                         }
                         userString[i] = '"';
@@ -384,6 +389,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                                     tempPrev = tempCur;
                                     userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                                     if (userString == NULL){
+                                        free(userString);
                                         return 3;
                                     }
                                     userString[i] = tempCur;
@@ -394,6 +400,12 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                                     if (tempCur == '"') {
                                         tempCur = getchar();
                                         if (tempCur == '"') {
+                                            userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                                            if (userString == NULL){
+                                                free(userString);
+                                                return 3;
+                                            }
+                                            userString[i] = '\0';
                                             return 0;
                                         }
                                         else{
@@ -409,6 +421,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                                 tempPrev = tempCur;
                                 userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                                 if (userString == NULL){
+                                    free(userString);
                                     return 3;
                                 }
                                 userString[i] = tempCur;
@@ -424,6 +437,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                 else{
                     userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                     if (userString == NULL){
+                        free(userString);
                         return 3;
                     }
                     userString[i] = '"';
@@ -438,6 +452,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                                 tempPrev = tempCur;
                                 userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                                 if (userString == NULL){
+                                    free(userString);
                                     return 3;
                                 }
                                 userString[i] = tempCur;
@@ -445,6 +460,12 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                                 i++;
                             }
                             else{
+                                userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                                if (userString == NULL){
+                                    free(userString);
+                                    return 3;
+                                }
+                                userString[i] = '\0';
                                 return 0;
                             }
                         }
@@ -455,6 +476,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                             tempPrev = tempCur;
                             userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                             if (userString == NULL){
+                                free(userString);
                                 return 3;
                             }
                             userString[i] = tempCur;
@@ -468,9 +490,10 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
             case '#': case '\n':{
                 userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                 if (userString == NULL){
+                    free(userString);
                     return 3;
                 }
-                userString[i] = tempCur;
+                userString[i] = '\0';
                 return 0;
             }
                 
@@ -478,6 +501,7 @@ int readCmd(void){ /*-1 - пустая строка, 2 - нарушение со
                 tempPrev = tempCur;
                 userString = (char*)realloc(userString, (i + 1) * sizeof(char));
                 if (userString == NULL){
+                    free(userString);
                     return 3;
                 }
                 userString[i] = tempCur;
@@ -544,9 +568,8 @@ int recognizeCmd(void){ // -1 - неккоректная команда
                 j++;
             }
             while (userString[j] != '\0') {
-                temp = userString[j];
                 pararmetrs = (char*)realloc(pararmetrs, (pararmetrsCounter + 1) * sizeof(char));
-                pararmetrs[pararmetrsCounter] = temp;
+                pararmetrs[pararmetrsCounter] = userString[j];
                 pararmetrsCounter++;
                 j++;
             }
