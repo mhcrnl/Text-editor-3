@@ -13,7 +13,8 @@ extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
-static struct termios oldAttributes;
+static struct termios stored_settings;
+
 
 int degree(int num, int deg){
     int temp = num;
@@ -51,7 +52,7 @@ void moveTxtY(char dir){
     }
     
     while ((tmpStrPointer != NULL) && (rowNum < screenRow)) {
-        changeTtyMod(1);
+        resetKeypress();
         clrscr();
         if (wrapMod) {
             while ((tmpCharPointer != NULL)) {
@@ -129,7 +130,7 @@ void moveTxtY(char dir){
         }
     }
     
-    changeTtyMod(0);
+    setKeypress();
 }
 
 void moveTxtX(char dir){
@@ -137,7 +138,7 @@ void moveTxtX(char dir){
     
     struct winsize screenSize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &screenSize);
-    changeTtyMod(1);
+    resetKeypress();
     
     if (screenNumY == 0) {
         if (dir == 'L'){
@@ -514,33 +515,24 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
     }
 }
 
-int changeTtyMod(int setMod){
-    //на ввод: 1-в каноничный, 0-в неканоничный;  на выход -1 - перенаправлен вывод
-    struct termios newAttributes;
+void setKeypress(void){
+    struct termios new_settings;
     
-    if(!isatty(0))
-    {
-        return -1;
-    }
+    tcgetattr(0,&stored_settings);
     
+    new_settings = stored_settings;
     
+    new_settings.c_lflag &= (~ICANON & ~ECHO);
+    new_settings.c_cc[VTIME] = 0;
+    new_settings.c_cc[VMIN] = 1;
     
-    if (!(setMod)) {
-        tcgetattr(0, &oldAttributes);
-        newAttributes = oldAttributes;
-        
-        newAttributes.c_lflag &= (~ICANON);
-        newAttributes.c_lflag &= (~ECHO);
-        newAttributes.c_cc[VTIME] = 0;
-        newAttributes.c_cc[VMIN] = 1;
-        
-        tcsetattr(0, TCSANOW, &newAttributes);
-        return 0;
-    }
-    else {
-        tcsetattr(0, TCSANOW, &oldAttributes);
-        return 0;
-    }
+    tcsetattr(0,TCSANOW,&new_settings);
+    return;
+}
+
+void resetKeypress(void){
+    tcsetattr(0,TCSANOW,&stored_settings);
+    return;
 }
 
 int recognizeCmd(void){ // -1 - неккоректная команда

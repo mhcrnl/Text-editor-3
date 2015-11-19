@@ -8,7 +8,8 @@ void moveTxtX(char);
 void initCmd(void);
 int initFile(char*);
 int readCmd(void);
-int changeTtyMod(int);
+void setKeypress(void);
+void resetKeypress(void);
 int recognizeCmd(void);
 void clearOutBuffer(void);
 
