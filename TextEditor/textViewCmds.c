@@ -27,7 +27,7 @@ void printPages(void){
         return;
     }
     
-    //changeTtyMod(1);
+    changeTtyMod(1);
     
     if (!isatty(1)) {
         while (tmpStrPointer!= NULL) {
@@ -120,7 +120,7 @@ void printPages(void){
             
         }
         
-        //changeTtyMod(0);
+        changeTtyMod(0);
         do{
             temp = getchar();
             if ((temp != 'q') && (temp != 'Q')) {
@@ -196,7 +196,7 @@ void printPages(void){
         tmpCharPointer = pointerForStrings -> curString;
         
     }
-    //changeTtyMod(1);
+    changeTtyMod(1);
     printf("\n");
 }
 

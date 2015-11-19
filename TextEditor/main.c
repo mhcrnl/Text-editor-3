@@ -40,6 +40,7 @@ int main(int argc, char *argv[]){
     while (!exit) {
         fprintf(stderr, "Editor: ");
         returningInt = readCmd();
+        //fprintf(stderr, "%s", userString);
         switch (returningInt) {
             case 1: break;
                 
@@ -75,6 +76,7 @@ int main(int argc, char *argv[]){
             }
             case 1:{
                 printPages();
+                clearOutBuffer();
                 break;
             }
             case 2:{
