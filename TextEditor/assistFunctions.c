@@ -13,7 +13,7 @@ extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
-static struct termios oldAttributes;
+struct termios oldAttributes;
 
 int degree(int num, int deg){
     int temp = num;
