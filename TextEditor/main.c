@@ -40,13 +40,13 @@ int main(int argc, char *argv[]){
     while (!exit) {
         fprintf(stderr, "Editor: ");
         returningInt = readCmd();
+        
         //fprintf(stderr, "%s", userString);
         switch (returningInt) {
             case 1: break;
                 
             case 2:{
                 fprintf(stderr, "Нарушено сочетание кавычек!\n");
-                //clearOutBuffer();
                 break;
             }
                 

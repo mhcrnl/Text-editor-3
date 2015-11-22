@@ -322,6 +322,13 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
         return 1;
     }
     
+    if (tempCur == '#'){
+        while (tempCur != '\n') {
+            tempCur = getchar();
+        }
+        return 1;
+    }
+    
     if (tempCur != ' '){
         firstSymbol = 1;
         userString = (char*)realloc(userString, (i + 1) * sizeof(char));
@@ -408,6 +415,9 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                                                 return 3;
                                             }
                                             userString[i] = '\0';
+                                            while (tempCur != '\n') {
+                                                tempCur = getchar();
+                                            }
                                             return 0;
                                         }
                                         else{
@@ -468,6 +478,9 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                                     return 3;
                                 }
                                 userString[i] = '\0';
+                                while (tempCur != '\n') {
+                                    tempCur = getchar();
+                                }
                                 return 0;
                             }
                         }
@@ -496,6 +509,9 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                     return 3;
                 }
                 userString[i] = '\0';
+                while (tempCur != '\n') {
+                    tempCur = getchar();
+                }
                 return 0;
             }
                 
