@@ -9,7 +9,7 @@
 #include <sys/ioctl.h>
 
 extern char *comands[], *pararmetrs, *userString;
-extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
+extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod, userStringSize;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
@@ -311,61 +311,44 @@ int initFile(char *fileName){
 int readCmd(void){ /* 1 - пустая строка, 2 - нарушение сочетания кавычек, 3 - переполнение памяти*/
     char tempCur = '!', tempPrev = '!';
     int firstSymbol = 0;
-    int i = 0;
     int tripleQuotes = 0;
-    
     userString = NULL;
+    userStringSize = 0;
+    
     tempCur = getchar();
     tempPrev = tempCur;
     
-    if (tempCur == '\n'){
-        return 1;
-    }
-    
-    if (tempCur == '#'){
+    if ((tempCur == '#') || (tempCur == '\n'))
+    {
         while (tempCur != '\n') {
             tempCur = getchar();
         }
         return 1;
     }
     
-    if (tempCur != ' '){
-        firstSymbol = 1;
-        userString = (char*)realloc(userString, (i + 1) * sizeof(char));
-        if (userString == NULL){
-            free(userString);
-            return 3;
+    while (1) {
+        if (tempCur != ' '){
+            firstSymbol = 1;
+            break;
         }
-        userString[i] = tempCur;
-        i++;
+        tempPrev = tempCur;
+        tempCur = getchar();
     }
     
-    tempCur = getchar();
-    
     while (1) {
-        if ((!firstSymbol) && (tempCur != ' ') && (tempPrev == ' ')) {
-            firstSymbol++;
-        }
         switch (tempCur) {
             case ' ': {
-                if (firstSymbol == 1){
-                    if (tempPrev == ' '){
-                        tempCur = getchar();
-                    }
-                    else {
-                        tempPrev = tempCur;
-                        userString = (char*)realloc(userString, (i + 1) * sizeof(char));
-                        if (userString == NULL){
-                            free(userString);
-                            return 3;
-                        }
-                        userString[i] = tempCur;
-                        i++;
-                        tempCur = getchar();
-                    }
+                if (tempPrev == ' '){
+                    tempCur = getchar();
                 }
                 else {
                     tempPrev = tempCur;
+                    userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
+                    if (userString == NULL){
+                        return 3;
+                    }
+                    userString[userStringSize] = tempCur;
+                    userStringSize++;
                     tempCur = getchar();
                 }
                 break;
@@ -379,13 +362,12 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                     tempCur = getchar();
                     if (tempCur == '"'){
                         tripleQuotes++;
-                        userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                        userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                         if (userString == NULL){
-                            free(userString);
                             return 3;
                         }
-                        userString[i] = '"';
-                        i++;
+                        userString[userStringSize] = '"';
+                        userStringSize++;
                         tempPrev = tempCur;
                         tempCur = getchar();
                         while (1) {
@@ -396,25 +378,23 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                             if (tempCur == '"') {
                                 if (tempPrev == '\\'){
                                     tempPrev = tempCur;
-                                    userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                                    userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                                     if (userString == NULL){
-                                        free(userString);
                                         return 3;
                                     }
-                                    userString[i] = tempCur;
+                                    userString[userStringSize] = tempCur;
                                     tempCur = getchar();
-                                    i++;
+                                    userStringSize++;
                                 }
                                 else{
                                     if (tempCur == '"') {
                                         tempCur = getchar();
                                         if (tempCur == '"') {
-                                            userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                                            userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                                             if (userString == NULL){
-                                                free(userString);
                                                 return 3;
                                             }
-                                            userString[i] = '\0';
+                                            userString[userStringSize] = '\0';
                                             while (tempCur != '\n') {
                                                 tempCur = getchar();
                                             }
@@ -431,14 +411,14 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                             }
                             else {
                                 tempPrev = tempCur;
-                                userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                                userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                                 if (userString == NULL){
                                     free(userString);
                                     return 3;
                                 }
-                                userString[i] = tempCur;
+                                userString[userStringSize] = tempCur;
                                 tempCur = getchar();
-                                i++;
+                                userStringSize++;
                             }
                         }
                     }
@@ -447,13 +427,13 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                     }
                 }
                 else{
-                    userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                    userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                     if (userString == NULL){
                         free(userString);
                         return 3;
                     }
-                    userString[i] = '"';
-                    i++;
+                    userString[userStringSize] = '"';
+                    userStringSize++;
                     while (1) {
                         if (tempCur == '\\') {
                             tempPrev = tempCur;
@@ -462,22 +442,22 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                         if (tempCur == '"') {
                             if (tempPrev == '\\'){
                                 tempPrev = tempCur;
-                                userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                                userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                                 if (userString == NULL){
                                     free(userString);
                                     return 3;
                                 }
-                                userString[i] = tempCur;
+                                userString[userStringSize] = tempCur;
                                 tempCur = getchar();
-                                i++;
+                                userStringSize++;
                             }
                             else{
-                                userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                                userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                                 if (userString == NULL){
                                     free(userString);
                                     return 3;
                                 }
-                                userString[i] = '\0';
+                                userString[userStringSize] = '\0';
                                 while (tempCur != '\n') {
                                     tempCur = getchar();
                                 }
@@ -489,26 +469,26 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                                 return 2;
                             }
                             tempPrev = tempCur;
-                            userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                            userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                             if (userString == NULL){
                                 free(userString);
                                 return 3;
                             }
-                            userString[i] = tempCur;
+                            userString[userStringSize] = tempCur;
                             tempCur = getchar();
-                            i++;
+                            userStringSize++;
                         }
                     }
                 }
             }
                 
             case '#': case '\n':{
-                userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                 if (userString == NULL){
                     free(userString);
                     return 3;
                 }
-                userString[i] = '\0';
+                userString[userStringSize] = '\0';
                 while (tempCur != '\n') {
                     tempCur = getchar();
                 }
@@ -517,13 +497,13 @@ int readCmd(void){ /* 1 - пустая строка, 2 - нарушение со
                 
             default: {
                 tempPrev = tempCur;
-                userString = (char*)realloc(userString, (i + 1) * sizeof(char));
+                userString = (char*)realloc(userString, (userStringSize + 1) * sizeof(char));
                 if (userString == NULL){
                     free(userString);
                     return 3;
                 }
-                userString[i] = tempCur;
-                i++;
+                userString[userStringSize] = tempCur;
+                userStringSize++;
                 tempCur = getchar();
                 break;
             }
@@ -575,7 +555,7 @@ int recognizeCmd(void){ // -1 - неккоректная команда
             if (userString[j] == ' '){
                 j++;
             }
-            while (userString[j] != '\0') {
+            while (j <= userStringSize) {
                 pararmetrs = (char*)realloc(pararmetrs, (pararmetrsCounter + 1) * sizeof(char));
                 pararmetrs[pararmetrsCounter] = userString[j];
                 pararmetrsCounter++;

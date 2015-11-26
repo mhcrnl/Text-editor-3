@@ -27,7 +27,7 @@ void printPages(void){
         return;
     }
     
-    resetKeypress();
+   // resetKeypress();
     
     if (!isatty(1)) {
         while (tmpStrPointer!= NULL) {
