@@ -15,17 +15,22 @@
 
 #define NUMOFCMD 16
 
-char *comands[NUMOFCMD], *pararmetrs = NULL, *userString = NULL;
+char *comands[NUMOFCMD], *parametrs = NULL, *userString = NULL;
 char fileName[127] = "!";
 int tabWidth = 8, wrapMod = 1, screenNumY = 0, isFileSaved = 0, isSaved = 0, userStringSize = 0;
 struct listOfStrings *pointerForStrings;
 struct listOfStrings *tmpStrPointer;
 struct listOfChars *tmpCharPointer;
+struct winsize screenSize;
 int screenCol = 80, screenRow = 25;
 
 int main(int argc, char *argv[]){
     int exit = 0, returningInt, i = 0;
     //char temp;
+    
+    ioctl(0, TIOCGWINSZ, &screenSize);
+    screenCol = screenSize.ws_col;
+    screenRow = screenSize.ws_row;
     
     if (argc == 2){
         while (argv[1][i] != '\0') {

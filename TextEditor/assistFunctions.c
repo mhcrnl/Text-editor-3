@@ -8,7 +8,7 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 
-extern char *comands[], *pararmetrs, *userString;
+extern char *comands[], *parametrs, *userString;
 extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod, userStringSize;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
@@ -556,8 +556,8 @@ int recognizeCmd(void){ // -1 - неккоректная команда
                 j++;
             }
             while (j <= userStringSize) {
-                pararmetrs = (char*)realloc(pararmetrs, (pararmetrsCounter + 1) * sizeof(char));
-                pararmetrs[pararmetrsCounter] = userString[j];
+                parametrs = (char*)realloc(parametrs, (pararmetrsCounter + 1) * sizeof(char));
+                parametrs[pararmetrsCounter] = userString[j];
                 pararmetrsCounter++;
                 j++;
             }

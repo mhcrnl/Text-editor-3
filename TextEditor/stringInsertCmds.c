@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 
-extern char *comands[], *pararmetrs, *userString;
+extern char *comands[], *parametrs, *userString;
 extern char fileName[];
 extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
@@ -22,20 +22,20 @@ int insertAfter(void){
     struct listOfStrings *tempPrevStr = NULL, *tempNextStr = NULL, *begPointer = NULL, *tempStr = NULL, *tempNext;
     struct listOfChars *tempPrevChar = NULL, *tempNextChar = NULL;
     
-    if (pararmetrs[0] != '"') {
-        while ((pararmetrs[i] != ' ') && (pararmetrs[i] != '"')) {
-            if (pararmetrs[i] == '\0') {
+    if (parametrs[0] != '"') {
+        while ((parametrs[i] != ' ') && (parametrs[i] != '"')) {
+            if (parametrs[i] == '\0') {
                 fprintf(stderr, "Неккоректный параметр!\n");
                 return 0;
             }
             posIndicator = 0;
-            strNum += atoi(&pararmetrs[i]) * degree(10, i);
+            strNum += atoi(&parametrs[i]) * degree(10, i);
             i++;
         }
     }
     
     i++;
-    if (pararmetrs[i] == '"') {
+    if (parametrs[i] == '"') {
         i++;
     }
     
@@ -44,8 +44,8 @@ int insertAfter(void){
     begPointer = tempNextStr;
     
     do{
-        while(pararmetrs[i] != '\n'){
-            if (pararmetrs[i] == '\0') {
+        while(parametrs[i] != '\n'){
+            if (parametrs[i] == '\0') {
                 break;
             }
             tempNextChar = (struct listOfChars*)malloc(sizeof(struct listOfChars));
@@ -56,19 +56,19 @@ int insertAfter(void){
             if (firstIteration == 1){
                 tempNextStr->curString = tempNextChar;
                 tempNextChar->prev = NULL;
-                tempNextChar->curChar = pararmetrs[i];
+                tempNextChar->curChar = parametrs[i];
                 tempPrevChar = tempNextChar;
                 firstIteration = 0;
                 i++;
                 continue;
             }
-            tempNextChar->curChar = pararmetrs[i];
+            tempNextChar->curChar = parametrs[i];
             tempNextChar->prev = tempPrevChar;
             tempPrevChar->next = tempNextChar;
             tempPrevChar = tempNextChar;
             i++;
         }
-        if (pararmetrs[i] == '\0') {
+        if (parametrs[i] == '\0') {
             //tempNextStr -> next = NULL;
             break;
         }

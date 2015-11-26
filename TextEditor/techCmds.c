@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 
-extern char *comands[], *pararmetrs, *userString;
+extern char *comands[], *parametrs, *userString;
 extern char fileName[];
 extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod, isSaved;
 extern struct listOfStrings *tmpStrPointer;
@@ -21,8 +21,8 @@ int exitF(void){
     char *force = "force";
     struct listOfChars *tmpC;
     struct listOfStrings *tmpS;
-    while (pararmetrs[i] != '\0'){
-        if (force[i] != pararmetrs[i]) {
+    while (parametrs[i] != '\0'){
+        if (force[i] != parametrs[i]) {
             isForceExit = 0;
             break;
         }
@@ -32,7 +32,7 @@ int exitF(void){
     
     if (isForceExit) {
         free(userString);
-        free(pararmetrs);
+        free(parametrs);
         tmpStrPointer = pointerForStrings;
         tmpCharPointer = pointerForStrings -> curString;
         tmpS = tmpStrPointer;
@@ -49,7 +49,7 @@ int exitF(void){
         }
         free(tmpStrPointer);
         free(tmpCharPointer);
-        free(pointerForStrings);
+        //free();
         
         return 1;
     }
@@ -65,12 +65,19 @@ void readF(void){
     int i = 0, j = 0;
     char tempFileName[127] = "!";
     
-    if (pararmetrs[i] == '"') {
+    if (parametrs[i] == '"') {
         i++;
     }
     
-    while (pararmetrs[i] != '\0') {
-        tempFileName[j] = pararmetrs[i];
+    while (fileName[j] != '\0') {
+        fileName[j] = '\0';
+        j++;
+    }
+    
+    j = 0;
+    
+    while (parametrs[i] != '\0') {
+        tempFileName[j] = parametrs[i];
         i++;
         j++;
     }
@@ -84,12 +91,19 @@ void readF(void){
 void openF(void){
     int i = 0, j = 0;
     
-    if (pararmetrs[i] == '"') {
+    if (parametrs[i] == '"') {
         i++;
     }
     
-    while (pararmetrs[i] != '\0') {
-        fileName[j] = pararmetrs[i];
+    while (fileName[j] != '\0') {
+        fileName[j] = '\0';
+        j++;
+    }
+    
+    j = 0;
+    
+    while (parametrs[i] != '\0') {
+        fileName[j] = parametrs[i];
         i++;
         j++;
     }
@@ -100,14 +114,19 @@ void openF(void){
 }
 
 void setName(void){
-    int i = 0;
+    int i = 0, j = 0;
     
-    if (pararmetrs[i] == '"') {
+    if (parametrs[i] == '"') {
         i++;
     }
     
-    while (pararmetrs[i] != '\0') {
-        fileName[i] = pararmetrs[i];
+    while (fileName[j] != '\0') {
+        fileName[j] = '\0';
+        j++;
+    }
+    
+    while (parametrs[i] != '\0') {
+        fileName[i] = parametrs[i];
     }
 }
 

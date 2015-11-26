@@ -9,7 +9,7 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 
-extern char *comands[], *pararmetrs, *userString;
+extern char *comands[], *parametrs, *userString;
 extern char fileName[];
 extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
@@ -206,13 +206,13 @@ void printRange(void){
     
     tmpStrPointer = pointerForStrings;
     
-    if (pararmetrs == NULL) {
+    if (parametrs == NULL) {
         printPages();
         exit (0);
     }
     
-    while ((pararmetrs[i] != ' ') || (pararmetrs[i] != '\0')) {
-        startR += atoi(&pararmetrs[i]) * degree(10, i);
+    while ((parametrs[i] != ' ') || (parametrs[i] != '\0')) {
+        startR += atoi(&parametrs[i]) * degree(10, i);
         i++;
     }
     
@@ -223,10 +223,10 @@ void printRange(void){
     prevStr = tmpStrPointer -> prev;
     tmpStrPointer -> prev = NULL;
     
-    if (pararmetrs[i] != '\0'){
+    if (parametrs[i] != '\0'){
         i++;
-        while ((pararmetrs[i] != '\0')) {
-            endR += atoi(&pararmetrs[i]) * degree(10, i);
+        while ((parametrs[i] != '\0')) {
+            endR += atoi(&parametrs[i]) * degree(10, i);
             i++;
         }
         
@@ -252,13 +252,13 @@ void setWrap(void){
     char yesM[3] = "yes";
     char noM[2] = "no";
     
-    if (pararmetrs == NULL) {
+    if (parametrs == NULL) {
         fprintf(stderr, "Некорректный параметр!\n");
         return;
     }
     
-    while (pararmetrs[i] != '\0') {
-        if (pararmetrs[i] == yesM[i]){
+    while (parametrs[i] != '\0') {
+        if (parametrs[i] == yesM[i]){
             i++;
             if (i == 3){
                 wrapMod = 1;
@@ -268,8 +268,8 @@ void setWrap(void){
         else break;
     }
     i = 0;
-    while (pararmetrs[i] != '\0') {
-        if (pararmetrs[i] == noM[i]){
+    while (parametrs[i] != '\0') {
+        if (parametrs[i] == noM[i]){
             i++;
             if (i == 2){
                 wrapMod = 0;
@@ -282,5 +282,5 @@ void setWrap(void){
 }
 
 void setTabWidth(void){
-    tabWidth = atoi(pararmetrs);
+    tabWidth = atoi(parametrs);
 }
