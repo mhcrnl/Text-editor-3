@@ -133,10 +133,9 @@ int main(int argc, char *argv[]){
                 //clearOutBuffer();
                 break;
             }
-             
+            
             case 12:{
                 openF();
-                //clearOutBuffer();
                 break;
             }
              
