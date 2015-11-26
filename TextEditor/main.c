@@ -12,7 +12,6 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 
-
 #define NUMOFCMD 16
 
 char *comands[NUMOFCMD], *parametrs = NULL, *userString = NULL;
