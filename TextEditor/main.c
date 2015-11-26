@@ -142,7 +142,6 @@ int main(int argc, char *argv[]){
              
             case 13:{
                 writeF();
-                //clearOutBuffer();
                 break;
             }
              
