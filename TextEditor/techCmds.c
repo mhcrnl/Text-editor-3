@@ -19,6 +19,8 @@ extern struct listOfStrings *pointerForStrings;
 int exitF(void){
     int i = 0, isForceExit = 0;
     char *force = "force";
+    struct listOfChars *tmpC;
+    struct listOfStrings *tmpS;
     while (pararmetrs[i] != '\0'){
         if (force[i] != pararmetrs[i]) {
             isForceExit = 0;
@@ -29,6 +31,26 @@ int exitF(void){
     }
     
     if (isForceExit) {
+        free(userString);
+        free(pararmetrs);
+        tmpStrPointer = pointerForStrings;
+        tmpCharPointer = pointerForStrings -> curString;
+        tmpS = tmpStrPointer;
+        tmpC = tmpCharPointer;
+        while (tmpS != NULL) {
+            while (tmpC!= NULL) {
+                tmpC = tmpCharPointer -> next;
+                free(tmpCharPointer);
+                tmpCharPointer = tmpC;
+            }
+            tmpS = tmpStrPointer -> next;
+            free(tmpStrPointer);
+            tmpStrPointer = tmpS;
+        }
+        free(tmpStrPointer);
+        free(tmpCharPointer);
+        free(pointerForStrings);
+        
         return 1;
     }
     if (!isSaved) {
