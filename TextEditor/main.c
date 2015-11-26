@@ -25,7 +25,6 @@ int screenCol = 80, screenRow = 25;
 
 int main(int argc, char *argv[]){
     int exit = 0, returningInt, i = 0;
-    //char temp;
     
     ioctl(0, TIOCGWINSZ, &screenSize);
     screenCol = screenSize.ws_col;
