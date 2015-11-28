@@ -30,8 +30,6 @@ void printPages(void){
         return;
     }
     
-   // resetKeypress();
-    
     if (!isatty(1)) {
         while (tmpStrPointer!= NULL) {
             while (tmpCharPointer!= NULL) {
@@ -65,6 +63,10 @@ void printPages(void){
                         }
                             
                         case '\n': {
+                            if (rowNum == (screenRow - 1)){
+                                rowNum++;
+                                break;
+                            }
                             printf("\n");
                             rowNum++;
                             colNum = 0;
