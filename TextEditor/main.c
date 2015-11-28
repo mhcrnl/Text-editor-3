@@ -26,9 +26,11 @@ int screenCol = 80, screenRow = 25;
 int main(int argc, char *argv[]){
     int exit = 0, returningInt, i = 0;
     
+  /*
     ioctl(0, TIOCGWINSZ, &screenSize);
     screenCol = screenSize.ws_col;
     screenRow = screenSize.ws_row;
+  */
     
     if (argc == 2){
         while (argv[1][i] != '\0') {

@@ -39,11 +39,8 @@ void clrscr(void){
 void moveTxtY(char dir){
     int rowNum = 0, colNum = 0, i;
     
-    struct winsize screenSize;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &screenSize);
-    
     if (dir == 'U'){
-        for (i = 0; i < (2 * screenRow); i++) {
+        for (i = 1; i < (2 * screenRow); i++) {
             if ((tmpStrPointer -> prev) != NULL) {
                 tmpStrPointer = tmpStrPointer -> prev;
             }
@@ -51,9 +48,12 @@ void moveTxtY(char dir){
         }
     }
     
-    while ((tmpStrPointer != NULL) && (rowNum < screenRow)) {
-        resetKeypress();
+    if (tmpStrPointer != NULL) {
         clrscr();
+        resetKeypress();
+    }
+    
+    while ((tmpStrPointer != NULL) && (rowNum < screenRow)) {
         if (wrapMod) {
             while ((tmpCharPointer != NULL)) {
                 switch (tmpCharPointer -> curChar) {
@@ -79,6 +79,7 @@ void moveTxtY(char dir){
                         printf("\n");
                         rowNum++;
                         colNum = 0;
+                        break;
                     }
                         
                     default: {
@@ -97,6 +98,9 @@ void moveTxtY(char dir){
                 tmpCharPointer = tmpCharPointer -> next;
             }
             tmpStrPointer = tmpStrPointer -> next;
+            if (tmpStrPointer != NULL) {
+                tmpCharPointer = tmpStrPointer -> curString;
+            }
         }
         else {
             while (colNum < screenCol) {
@@ -126,7 +130,6 @@ void moveTxtY(char dir){
                 tmpCharPointer = tmpCharPointer -> next;
             }
             tmpStrPointer = tmpStrPointer -> next;
-            tmpCharPointer = tmpStrPointer -> curString;
         }
     }
     
