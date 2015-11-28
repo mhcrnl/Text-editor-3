@@ -15,13 +15,16 @@ extern int screenCol, screenRow, screenNumY, tabWidth, wrapMod;
 extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
+extern struct winsize screenSize;
 
 
 void printPages(void){
     char temp = '!';
     int i, rowNum = 0, colNum = 0;
-    struct winsize screenSize;
-    ioctl(STDOUT_FILENO, TIOCGWINSZ, &screenSize);
+    
+    ioctl(0, TIOCGWINSZ, &screenSize);
+    screenCol = screenSize.ws_col;
+    screenRow = screenSize.ws_row;
     
     if (pointerForStrings == NULL) {
         return;
