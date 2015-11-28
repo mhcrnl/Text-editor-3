@@ -76,6 +76,10 @@ void moveTxtY(char dir){
                     }
                         
                     case '\n': {
+                        if (rowNum == (screenRow - 1)){
+                            rowNum++;
+                            break;
+                        }
                         printf("\n");
                         rowNum++;
                         colNum = 0;
@@ -131,6 +135,7 @@ void moveTxtY(char dir){
             }
             tmpStrPointer = tmpStrPointer -> next;
         }
+        
     }
     
     setKeypress();
