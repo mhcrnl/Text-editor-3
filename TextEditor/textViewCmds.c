@@ -21,11 +21,13 @@ extern struct winsize screenSize;
 void printPages(void){
     char temp = '!';
     int i, rowNum = 0, colNum = 0;
-    
+   
+/*
     ioctl(0, TIOCGWINSZ, &screenSize);
     screenCol = screenSize.ws_col;
     screenRow = screenSize.ws_row;
     
+ */
     if (pointerForStrings == NULL) {
         return;
     }
@@ -131,68 +133,67 @@ void printPages(void){
             if ((temp != 'q') && (temp != 'Q')) {
                 switch (temp) {
                         
-                    case ' ':{
+                    case ' ': case 's': case 'S':{
                         moveTxtY('D');
                         break;
                     }
                         
-                    case '<':{
+                    case '<': case 'a': case 'A':{
                         if (!wrapMod) {
                             moveTxtX('L');
                         }
                         break;
                     }
                         
-                    case '>':{
+                    case '>': case 'd': case 'D':{
                         if (!wrapMod) {
                             moveTxtX('R');
                         }
                         break;
                     }
-                        
-                    default:{
-                        switch (temp) {
-                            case 27:{
-                                temp = getchar();
-                                if (temp == '[') {
-                                    temp = getchar();
-                                    switch (temp) {
-                                        case 'A':{
-                                            moveTxtY('U');
-                                            break;
-                                        }
-                                            
-                                        case 'B':{
-                                            moveTxtY('D');
-                                            break;
-                                        }
-                                            
-                                        case 'C':{
-                                            if (!wrapMod) {
-                                                moveTxtX('L');
-                                            }
-                                            break;
-                                        }
-                                            
-                                        case 'D':{
-                                            if (!wrapMod) {
-                                                moveTxtX('R');
-                                            }
-                                            break;
-                                        }
-                                            
-                                        default:{
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                                
-                            default: break;
-                        }
+                    
+                    case 'w': case 'W':{
+                        moveTxtY('U');
                         break;
                     }
                         
+                    case 27:{
+                        temp = getchar();
+                        if (temp == '[') {
+                            temp = getchar();
+                            switch (temp) {
+                                case 'A':{
+                                    moveTxtY('U');
+                                    break;
+                                }
+                                    
+                                case 'B':{
+                                    moveTxtY('D');
+                                    break;
+                                }
+                                    
+                                case 'C':{
+                                    if (!wrapMod) {
+                                        moveTxtX('L');
+                                    }
+                                    break;
+                                }
+                                    
+                                case 'D':{
+                                    if (!wrapMod) {
+                                        moveTxtX('R');
+                                    }
+                                    break;
+                                }
+                                    
+                                default:{
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                            
+                    default: break;
                 }
             }
         } while ((temp != 'q') && (temp != 'Q'));

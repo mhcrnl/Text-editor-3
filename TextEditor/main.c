@@ -32,6 +32,7 @@ int main(int argc, char *argv[]){
     screenRow = screenSize.ws_row;
   */
     
+    
     if (argc == 2){
         while (argv[1][i] != '\0') {
             fileName[i] = argv[1][i];
