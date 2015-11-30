@@ -49,9 +49,10 @@ void moveTxtY(char dir){
         }
     }
     
+    resetKeypress();
+    
     if (isItOk || (dir == 'U')) {
         clrscr();
-        resetKeypress();
     }
     
     while ((tmpStrPointer != NULL) && (rowNum < screenRow)) {
