@@ -101,10 +101,12 @@ void moveTxtY(char dir){
                 }
                 tmpCharPointer = tmpCharPointer -> next;
             }
-            tmpStrPointer = tmpStrPointer -> next;
-            if (tmpStrPointer != NULL) {
+
+            if (tmpStrPointer -> next != NULL) {
+                tmpStrPointer = tmpStrPointer -> next;
                 tmpCharPointer = tmpStrPointer -> curString;
             }
+            break;
         }
         else {
             while (colNum < screenCol) {
