@@ -38,6 +38,7 @@ void clrscr(void){
 
 void moveTxtY(char dir){
     int rowNum = 0, colNum = 0, i;
+    static int isItOk = 1;
     
     if (dir == 'U'){
         for (i = 1; i < (2 * screenRow); i++) {
@@ -48,7 +49,7 @@ void moveTxtY(char dir){
         }
     }
     
-    if (tmpStrPointer != NULL) {
+    if (isItOk || (dir == 'U')) {
         clrscr();
         resetKeypress();
     }
@@ -105,8 +106,10 @@ void moveTxtY(char dir){
             if (tmpStrPointer -> next != NULL) {
                 tmpStrPointer = tmpStrPointer -> next;
                 tmpCharPointer = tmpStrPointer -> curString;
+                isItOk = 1;
             }
             else{
+                isItOk = 0;
                 break;
             }
         }
