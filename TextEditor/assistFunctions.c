@@ -106,7 +106,9 @@ void moveTxtY(char dir){
                 tmpStrPointer = tmpStrPointer -> next;
                 tmpCharPointer = tmpStrPointer -> curString;
             }
-            break;
+            else{
+                break;
+            }
         }
         else {
             while (colNum < screenCol) {
