@@ -21,7 +21,7 @@ struct listOfStrings *pointerForStrings;
 struct listOfStrings *tmpStrPointer;
 struct listOfChars *tmpCharPointer;
 struct winsize screenSize;
-int screenCol = 30, screenRow = 25;
+int screenCol = 80, screenRow = 25;
 
 int main(int argc, char *argv[]){
     int exit = 0, returningInt, i = 0;
