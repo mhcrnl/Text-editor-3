@@ -14,6 +14,7 @@ extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
 static struct termios stored_settings;
+int isItOk = 1;
 
 
 int degree(int num, int deg){
@@ -38,7 +39,6 @@ void clrscr(void){
 
 void moveTxtY(char dir){
     int rowNum = 0, colNum = 0, i;
-    static int isItOk = 1;
     
     if (dir == 'U'){
         for (i = 1; i < (2 * screenRow); i++) {
@@ -102,6 +102,9 @@ void moveTxtY(char dir){
                     }
                 }
                 tmpCharPointer = tmpCharPointer -> next;
+                if (rowNum >= screenRow){
+                    break;
+                }
             }
 
             if (tmpStrPointer -> next != NULL) {
@@ -115,7 +118,7 @@ void moveTxtY(char dir){
             }
         }
         else {
-            while (colNum < screenCol) {
+            while ((colNum < screenCol) && (tmpCharPointer != NULL)) {
                 switch (tmpCharPointer -> curChar) {
                     case '\t':{
                         if ((screenCol - colNum) >= tabWidth){
@@ -128,9 +131,13 @@ void moveTxtY(char dir){
                     }
                         
                     case '\n': {
+                        if (rowNum == (screenRow - 1)){
+                            rowNum++;
+                            break;
+                        }
                         printf("\n");
                         rowNum++;
-                        colNum = 0;
+                        break;
                     }
                         
                     default: {
@@ -141,9 +148,17 @@ void moveTxtY(char dir){
                 }
                 tmpCharPointer = tmpCharPointer -> next;
             }
-            tmpStrPointer = tmpStrPointer -> next;
+            colNum = 0;
+            if (tmpStrPointer -> next != NULL) {
+                tmpStrPointer = tmpStrPointer -> next;
+                tmpCharPointer = tmpStrPointer -> curString;
+                isItOk = 1;
+            }
+            else{
+                isItOk = 0;
+                break;
+            }
         }
-        
     }
     
     setKeypress();
@@ -152,9 +167,11 @@ void moveTxtY(char dir){
 void moveTxtX(char dir){
     int i, colNum = 0, rowNum = 0;
     
-    struct winsize screenSize;
+    /*struct winsize screenSize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &screenSize);
+     */
     resetKeypress();
+    clrscr();
     
     if (screenNumY == 0) {
         if (dir == 'L'){
@@ -165,11 +182,11 @@ void moveTxtX(char dir){
     if (dir == 'R') {
         tmpStrPointer = pointerForStrings;
         tmpCharPointer = pointerForStrings -> curString;
-        for (i = 0; i < screenNumY * screenCol; i++) {
+        for (i = 0; i < (screenNumY + 1) * screenCol; i++) {
             tmpCharPointer = tmpCharPointer -> next;
         }
-        while ((tmpStrPointer != NULL) || (rowNum < screenRow)) {
-            while ((tmpCharPointer != NULL) || (colNum < screenCol)) {
+        while ((tmpStrPointer != NULL) && (rowNum < screenRow)) {
+            while ((tmpCharPointer != NULL) && (colNum < screenCol)) {
                 switch (tmpCharPointer -> curChar) {
                     case '\t':{
                         if ((screenCol - colNum) >= tabWidth){
@@ -195,8 +212,14 @@ void moveTxtX(char dir){
                 }
                 tmpCharPointer = tmpCharPointer -> next;
             }
-            tmpStrPointer = tmpStrPointer -> next;
-            for (i = 0; i < screenNumY * screenCol; i++) {
+            if (tmpStrPointer -> next != NULL) {
+                tmpStrPointer = tmpStrPointer -> next;
+                tmpCharPointer = tmpStrPointer -> curString;
+            }
+            else{
+                break;
+            }
+            for (i = 0; i < (screenNumY + 1) * screenCol; i++) {
                 tmpCharPointer = tmpCharPointer -> next;
             }
         }
@@ -242,6 +265,7 @@ void moveTxtX(char dir){
             }
         }
     }
+    setKeypress();
 }
 
 void initCmd(void){

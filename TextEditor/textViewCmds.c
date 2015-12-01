@@ -16,7 +16,7 @@ extern struct listOfStrings *tmpStrPointer;
 extern struct listOfChars *tmpCharPointer;
 extern struct listOfStrings *pointerForStrings;
 extern struct winsize screenSize;
-
+extern int isItOk;
 
 void printPages(void){
     char temp = '!';
@@ -89,9 +89,12 @@ void printPages(void){
                         }
                     }
                     tmpCharPointer = tmpCharPointer -> next;
+                    if (rowNum >= screenRow){
+                        break;
+                    }
                 }
-                tmpStrPointer = tmpStrPointer -> next;
-                if (tmpStrPointer != NULL) {
+                if (tmpStrPointer -> next != NULL) {
+                    tmpStrPointer = tmpStrPointer -> next;
                     tmpCharPointer = tmpStrPointer -> curString;
                 }
             }
@@ -109,9 +112,13 @@ void printPages(void){
                         }
                             
                         case '\n': {
+                            if (rowNum == (screenRow - 1)){
+                                rowNum++;
+                                break;
+                            }
                             printf("\n");
                             rowNum++;
-                            colNum = 0;
+                            break;
                         }
                             
                         default: {
@@ -121,10 +128,17 @@ void printPages(void){
                         }
                     }
                     tmpCharPointer = tmpCharPointer -> next;
+                    if (tmpCharPointer == NULL) {
+                        break;
+                    }
                 }
-                tmpStrPointer = tmpStrPointer -> next;
+                colNum = 0;
+                if (tmpStrPointer -> next != NULL) {
+                    tmpStrPointer = tmpStrPointer -> next;
+                    tmpCharPointer = tmpStrPointer -> curString;
+                }
+                else break;
             }
-            
         }
         
         setKeypress();
@@ -203,6 +217,7 @@ void printPages(void){
         
     }
     resetKeypress();
+    isItOk = 1;
     printf("\n");
 }
 
